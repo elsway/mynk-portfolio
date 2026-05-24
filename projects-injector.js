@@ -617,9 +617,12 @@
       if (mid) mid.style.height = 'auto';
       inspo.style.height = 'auto';
 
-      /* CTA child (.mynk-qw221b) is 833px but content is only ~216px — collapse */
+      /* CTA child (.mynk-qw221b) has flex:1 stretching it to 833px — kill flex-grow
+         and collapse the parent CTA container too */
       var ctaWrap = inspo.querySelector('.mynk-qw221b');
-      if (ctaWrap) ctaWrap.style.height = 'auto';
+      if (ctaWrap) { ctaWrap.style.flex = '0 0 auto'; ctaWrap.style.height = 'auto'; }
+      var ctaContainer = inspo.querySelector('.mynk-pckw6h');
+      if (ctaContainer) ctaContainer.style.height = 'auto';
     }
 
   }
