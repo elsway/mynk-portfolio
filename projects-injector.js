@@ -594,35 +594,30 @@
       }
     }
 
-    /* ── IMAGE GRID — trim to 2 per column (6 total), collapse whitespace ── */
+    /* ── IMAGE GRID — reduce to 8 (2+3+3) ── */
     var inspo = document.querySelector('[data-mynk-name="inspo"]');
     if (inspo) {
       var grid = inspo.querySelector('[data-mynk-name="Frame 2147226466"]');
       if (grid) {
-        /* Grid is masonry columns (flex-direction:row, each child is a column).
-           Trim every column to max 2 images so heights stay balanced. */
-        for (var ci = 0; ci < grid.children.length; ci++) {
-          var col = grid.children[ci];
-          while (col.children.length > 2) {
-            col.removeChild(col.lastElementChild);
+        /* Trim each row to 3 first */
+        for (var ri = 0; ri < grid.children.length; ri++) {
+          var row = grid.children[ri];
+          while (row.children.length > 3) {
+            row.removeChild(row.lastElementChild);
           }
         }
-        /* Force grid + ancestors to shrink-wrap after removal */
-        grid.style.height = 'auto';
+        /* Remove last photo from first row → 2+3+3 */
+        var firstRow = grid.children[0];
+        if (firstRow && firstRow.children.length > 2) {
+          firstRow.removeChild(firstRow.lastElementChild);
+        }
       }
-      /* Collapse fixed heights up the tree */
-      var inner = inspo.querySelector('.mynk-1yvxud');
-      if (inner) inner.style.height = 'auto';
-      var mid = inspo.querySelector('.mynk-1tvcmag');
-      if (mid) mid.style.height = 'auto';
-      inspo.style.height = 'auto';
+    }
 
-      /* CTA child (.mynk-qw221b) has flex:1 stretching it to 833px — kill flex-grow
-         and collapse the parent CTA container too */
-      var ctaWrap = inspo.querySelector('.mynk-qw221b');
-      if (ctaWrap) { ctaWrap.style.flex = '0 0 auto'; ctaWrap.style.height = 'auto'; }
-      var ctaContainer = inspo.querySelector('.mynk-pckw6h');
-      if (ctaContainer) ctaContainer.style.height = 'auto';
+    /* ── FOOTER — hide brand logos strip ── */
+    var frame116 = document.querySelector('[data-mynk-name="Frame 116"]');
+    if (frame116 && frame116.children.length >= 2) {
+      frame116.children[1].style.display = 'none';
     }
 
   }
