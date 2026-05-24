@@ -1,0 +1,32 @@
+html,
+body,
+#main {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Project overlay ── */
+.pj-overlay { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9999; display:flex; align-items:flex-end; justify-content:center; opacity:0; transition:opacity .3s; }
+.pj-overlay.pj-visible { opacity:1; }
+.pj-panel  { background:#fff; width:100%; max-width:680px; max-height:90vh; overflow-y:auto; border-radius:16px 16px 0 0; padding:32px 28px 48px; position:relative; transform:translateY(40px); transition:transform .35s cubic-bezier(.34,1.3,.64,1); }
+.pj-overlay.pj-visible .pj-panel { transform:translateY(0); }
+.pj-close  { position:absolute; top:20px; right:20px; background:none; border:none; font-size:18px; cursor:pointer; color:rgba(0,0,0,.5); }
+.pj-cover  { width:100%; border-radius:10px; margin-bottom:24px; object-fit:cover; max-height:260px; }
+.pj-co     { font-family:"RevboxText",sans-serif; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:rgba(0,0,0,.45); margin:0 0 8px; }
+.pj-title  { font-family:"RevboxHeadline",sans-serif; font-size:28px; font-variation-settings:"wdth" 85,"wght" 700; letter-spacing:-.02em; margin:0 0 6px; color:rgb(7,6,7); }
+.pj-cat    { font-family:"RevboxText",sans-serif; font-size:13px; color:rgba(0,0,0,.5); margin:0 0 20px; }
+.pj-desc   { font-family:"RevboxText",sans-serif; font-size:15px; line-height:1.6; color:rgb(30,30,30); margin:0 0 24px; }
+.pj-scope-head { font-family:"RevboxText",sans-serif; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:rgba(0,0,0,.4); margin:0 0 10px; }
+.pj-scope  { margin:0; padding-left:18px; }
+.pj-scope li { font-family:"RevboxText",sans-serif; font-size:14px; line-height:1.7; color:rgb(40,40,40); }
