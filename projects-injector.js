@@ -594,24 +594,28 @@
       }
     }
 
-    /* ── IMAGE GRID — reduce to 8 (2+3+3) ── */
+    /* ── IMAGE GRID — trim to 2 per column (6 total), collapse whitespace ── */
     var inspo = document.querySelector('[data-mynk-name="inspo"]');
     if (inspo) {
       var grid = inspo.querySelector('[data-mynk-name="Frame 2147226466"]');
       if (grid) {
-        /* Trim each row to 3 first */
-        for (var ri = 0; ri < grid.children.length; ri++) {
-          var row = grid.children[ri];
-          while (row.children.length > 3) {
-            row.removeChild(row.lastElementChild);
+        /* Grid is masonry columns (flex-direction:row, each child is a column).
+           Trim every column to max 2 images so heights stay balanced. */
+        for (var ci = 0; ci < grid.children.length; ci++) {
+          var col = grid.children[ci];
+          while (col.children.length > 2) {
+            col.removeChild(col.lastElementChild);
           }
         }
-        /* Remove last photo from first row → 2+3+3 */
-        var firstRow = grid.children[0];
-        if (firstRow && firstRow.children.length > 2) {
-          firstRow.removeChild(firstRow.lastElementChild);
-        }
+        /* Force grid + ancestors to shrink-wrap after removal */
+        grid.style.height = 'auto';
       }
+      /* Collapse fixed heights up the tree */
+      var inner = inspo.querySelector('.mynk-1yvxud');
+      if (inner) inner.style.height = 'auto';
+      var mid = inspo.querySelector('.mynk-1tvcmag');
+      if (mid) mid.style.height = 'auto';
+      inspo.style.height = 'auto';
     }
 
   }
