@@ -479,10 +479,14 @@
       }
     }
 
-    /* ── SECTION 03 — Card labels ── */
+    /* ── SECTION 03 — Card labels (content-based, variant-name-independent) ── */
     var sec03 = document.querySelector('[data-mynk-name="03"]');
     if (sec03) {
-      var cards03 = sec03.querySelectorAll('[data-mynk-name="Variant 2"]');
+      var allVariants03 = sec03.querySelectorAll('[data-mynk-name^="Variant"]');
+      var cards03 = [];
+      for (var vi = 0; vi < allVariants03.length; vi++) {
+        if (allVariants03[vi].querySelectorAll("p").length > 0) cards03.push(allVariants03[vi]);
+      }
       /* Card 0: Cars24 subtitle */
       if (cards03[0]) {
         var sub0 = findP(cards03[0], "Cybersecurity");
