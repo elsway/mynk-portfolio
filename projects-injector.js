@@ -616,6 +616,10 @@
       var mid = inspo.querySelector('.mynk-1tvcmag');
       if (mid) mid.style.height = 'auto';
       inspo.style.height = 'auto';
+
+      /* CTA child (.mynk-qw221b) is 833px but content is only ~216px — collapse */
+      var ctaWrap = inspo.querySelector('.mynk-qw221b');
+      if (ctaWrap) ctaWrap.style.height = 'auto';
     }
 
   }
