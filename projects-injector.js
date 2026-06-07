@@ -110,18 +110,18 @@
     var children = wrap.children;
     if (children.length < 7) return;
 
-    /* Hero image → animated GIF replacement */
+    /* Hero image replacement */
     var heroImgContainer = children[0].querySelector(".mynk-1w9ex7k");
     if (heroImgContainer) {
       heroImgContainer.innerHTML = "";
-      var gif = document.createElement("img");
-      gif.src = "content/videos/design-to-code.gif";
-      gif.alt = "Design to Code workflow";
-      gif.style.width = "100%";
-      gif.style.height = "100%";
-      gif.style.objectFit = "cover";
-      gif.style.borderRadius = "12px";
-      heroImgContainer.appendChild(gif);
+      var heroImg = document.createElement("img");
+      heroImg.src = "content/images/cars24-ds-hero.webp";
+      heroImg.alt = "Cars24 Design System overview";
+      heroImg.style.width = "100%";
+      heroImg.style.height = "100%";
+      heroImg.style.objectFit = "contain";
+      heroImg.style.borderRadius = "12px";
+      heroImgContainer.appendChild(heroImg);
     }
 
     /* Hero paragraph */
