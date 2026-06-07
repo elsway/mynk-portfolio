@@ -115,7 +115,7 @@
     if (heroImgContainer) {
       heroImgContainer.innerHTML = "";
       var video = document.createElement("video");
-      video.src = "content/videos/design-to-code.webm";
+      video.src = "content/videos/design-to-code.mp4";
       video.autoplay = true;
       video.loop = true;
       video.muted = true;
