@@ -110,21 +110,18 @@
     var children = wrap.children;
     if (children.length < 7) return;
 
-    /* Hero image → video replacement */
+    /* Hero image → animated GIF replacement */
     var heroImgContainer = children[0].querySelector(".mynk-1w9ex7k");
     if (heroImgContainer) {
       heroImgContainer.innerHTML = "";
-      var video = document.createElement("video");
-      video.src = "content/videos/design-to-code.mp4";
-      video.autoplay = true;
-      video.loop = true;
-      video.muted = true;
-      video.playsInline = true;
-      video.style.width = "100%";
-      video.style.height = "100%";
-      video.style.objectFit = "cover";
-      video.style.borderRadius = "12px";
-      heroImgContainer.appendChild(video);
+      var gif = document.createElement("img");
+      gif.src = "content/videos/design-to-code.gif";
+      gif.alt = "Design to Code workflow";
+      gif.style.width = "100%";
+      gif.style.height = "100%";
+      gif.style.objectFit = "cover";
+      gif.style.borderRadius = "12px";
+      heroImgContainer.appendChild(gif);
     }
 
     /* Hero paragraph */
