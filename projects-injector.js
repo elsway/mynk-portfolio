@@ -280,6 +280,24 @@
     if (titlePs[2]) titlePs[2].textContent = "When: 2025";
     if (titlePs[3]) titlePs[3].textContent = "Role: Senior Designer  ·  Gurugram";
 
+    /* --- Hero image replacement --- */
+    var heroImgContainer2 = children[0].querySelector("div[class*='mynk-'] > div[class*='mynk-']");
+    if (!heroImgContainer2) {
+      var imgs2 = children[0].querySelectorAll("img");
+      if (imgs2.length > 0) heroImgContainer2 = imgs2[0].parentElement;
+    }
+    if (heroImgContainer2 && heroImgContainer2.querySelector("img")) {
+      heroImgContainer2.innerHTML = "";
+      var buyImg = document.createElement("img");
+      buyImg.src = "content/images/cars24-buyflow-hero.webp";
+      buyImg.alt = "Cars24 Australia Buy Flow";
+      buyImg.style.width = "100%";
+      buyImg.style.height = "100%";
+      buyImg.style.objectFit = "cover";
+      buyImg.style.borderRadius = "12px";
+      heroImgContainer2.appendChild(buyImg);
+    }
+
     /* --- Hero paragraph (child 1) --- */
     var heroPs = children[1].querySelectorAll("p");
     var heroText = "Buying a used car online depends on speed, clarity, and confidence.";
