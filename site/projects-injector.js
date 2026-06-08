@@ -269,10 +269,10 @@
     wrap.insertBefore(keyWorkSec, pux);
 
     /* Hide old numbered sections */
-    children[5].style.display = "none";   // Product & UX (shifted)
-    children[6].style.display = "none";   // Go-to-market
-    children[7].style.display = "none";   // Customer-facing
-    children[8].style.display = "none";   // Web & social
+    children[5].style.display = "none";   // Replaced legacy project block
+    children[6].style.display = "none";   // Replaced legacy project block
+    children[7].style.display = "none";   // Replaced legacy project block
+    children[8].style.display = "none";   // Replaced legacy project block
 
     /* Biggest Challenge — replace Stack */
     var stackSection = wrap.querySelector(".mynk-1g8iydi");
