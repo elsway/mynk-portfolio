@@ -366,7 +366,7 @@
     imageWrap.style.overflow = "hidden";
     imageWrap.style.background = "rgb(15, 15, 15)";
 
-    var heroImageSrc = "/content/images/cars24-australia-buy-flow-listing.webp?width=2880&height=2430";
+    var heroImageSrc = "content/images/cars24-australia-buy-flow-listing.webp?width=2880&height=2430";
     var heroImage = document.createElement("img");
     heroImage.src = heroImageSrc;
     heroImage.srcset = heroImageSrc + " 2880w";
@@ -492,7 +492,7 @@
     var heroImage = overlay.querySelector("img");
     if (!heroImage) return;
 
-    var heroImageSrc = "/content/images/park-plus-challan-cover.webp?width=2858&height=1827";
+    var heroImageSrc = "content/images/park-plus-challan-cover.webp?width=2858&height=1827";
     heroImage.src = heroImageSrc;
     heroImage.srcset = heroImageSrc + " 2858w";
     heroImage.style.width = "100%";
@@ -638,7 +638,7 @@
 
         var project1Media = cars24DesignSystemCard.querySelector(".mynk-180jv24-container");
         if (project1Media) {
-          var project1ImgSrc = "/content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410";
+          var project1ImgSrc = "content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410";
           setProjectCardImage(cars24DesignSystemCard, project1Media, project1ImgSrc, "Cars24 Design System card artwork", "contain", "center center");
         }
       }
@@ -669,7 +669,7 @@
 
         var media = cars24BuyFlowCard.querySelector(".mynk-t2fzvc-container");
         if (media) {
-          var cardImgSrc = "/content/images/ofupg06QZfIa4u1jO05rU3np9pw.png?width=512&height=410";
+          var cardImgSrc = "content/images/ofupg06QZfIa4u1jO05rU3np9pw.png?width=512&height=410";
           setProjectCardImage(cars24BuyFlowCard, media, cardImgSrc, "Cars24 Australia card artwork", "cover", "top center");
         }
       }
@@ -690,7 +690,7 @@
 
         var parkMedia = parkCard.querySelector(".mynk-y7ndlg-container, .mynk-9omkop-container");
         if (parkMedia) {
-          var parkImgSrc = "/content/images/ujTyPAs3slech5PiMLO4pxlJ3Q.png?width=512&height=410";
+          var parkImgSrc = "content/images/ujTyPAs3slech5PiMLO4pxlJ3Q.png?width=512&height=410";
           setProjectCardImage(parkCard, parkMedia, parkImgSrc, "Park+ card artwork", "contain", "center center");
         }
       }
