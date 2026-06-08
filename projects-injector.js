@@ -91,6 +91,74 @@
     buildFn(el);
   }
 
+  function ensureProjectCardAnimationStyles() {
+    if (document.getElementById("mynk-project-card-animation-styles")) return;
+    var style = document.createElement("style");
+    style.id = "mynk-project-card-animation-styles";
+    style.textContent = [
+      ".mynk-project-card-media {",
+      "  aspect-ratio: 1.2193732193732194 / 1 !important;",
+      "  height: var(--mynk-aspect-ratio-supported, 351px) !important;",
+      "  overflow: hidden !important;",
+      "  perspective: 900px;",
+      "  position: relative !important;",
+      "  width: 100% !important;",
+      "}",
+      ".mynk-project-card-fallback-art {",
+      "  filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.25)) drop-shadow(0px 8px 6px rgba(0, 0, 0, 0.15));",
+      "  transition: filter 400ms cubic-bezier(.2, .8, .2, 1), transform 400ms cubic-bezier(.2, .8, .2, 1);",
+      "  will-change: filter, transform;",
+      "}",
+      ".mynk-project-card-fallback-shine {",
+      "  background: linear-gradient(132deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 3%, rgba(255, 255, 255, 0.8) 17%, rgba(255, 255, 255, 0) 22%);",
+      "  inset: 0;",
+      "  mix-blend-mode: overlay;",
+      "  pointer-events: none;",
+      "  position: absolute;",
+      "  transition: background 400ms cubic-bezier(.2, .8, .2, 1);",
+      "}",
+      ".mynk-project-card-root:hover .mynk-project-card-fallback-art,",
+      ".mynk-project-card-root.hover .mynk-project-card-fallback-art,",
+      ".mynk-project-card-root:active .mynk-project-card-fallback-art,",
+      ".mynk-project-card-root.pressed .mynk-project-card-fallback-art {",
+      "  filter: drop-shadow(0px 8px 4px rgba(0, 0, 0, 0.25)) drop-shadow(0px 13px 9px rgba(0, 0, 0, 0.15));",
+      "  transform: rotate(-8deg) rotateX(6deg) rotateY(-6deg);",
+      "}",
+      ".mynk-project-card-root:hover .mynk-project-card-fallback-shine,",
+      ".mynk-project-card-root.hover .mynk-project-card-fallback-shine,",
+      ".mynk-project-card-root:active .mynk-project-card-fallback-shine,",
+      ".mynk-project-card-root.pressed .mynk-project-card-fallback-shine {",
+      "  background: linear-gradient(132deg, rgba(255, 255, 255, 0) 77%, rgb(255, 255, 255) 83%, rgb(255, 255, 255) 96%, rgba(255, 255, 255, 0) 103%);",
+      "}"
+    ].join("\n");
+    document.head.appendChild(style);
+  }
+
+  function setProjectCardImage(card, media, src, alt, objectFit, objectPosition) {
+    if (!card || !media) return;
+    ensureProjectCardAnimationStyles();
+    card.classList.add("mynk-project-card-root");
+    media.classList.add("mynk-project-card-media");
+    if (media.children.length) return;
+    media.innerHTML = "";
+
+    var img = document.createElement("img");
+    img.className = "mynk-project-card-fallback-art";
+    img.src = src;
+    img.srcset = src + " 512w";
+    img.alt = alt;
+    img.style.display = "block";
+    img.style.height = "100%";
+    img.style.objectFit = objectFit;
+    img.style.objectPosition = objectPosition;
+    img.style.width = "100%";
+    media.appendChild(img);
+
+    var shine = document.createElement("div");
+    shine.className = "mynk-project-card-fallback-shine";
+    media.appendChild(shine);
+  }
+
   /* ════════════════════════════════════════════════
      CARD 1 — Cars24 Design System
      Overlay: .mynk-gU1DZ.mynk-10veyav
@@ -109,20 +177,6 @@
     if (!wrap) return;
     var children = wrap.children;
     if (children.length < 7) return;
-
-    /* Hero image replacement */
-    var heroImgContainer = children[0].querySelector(".mynk-1w9ex7k");
-    if (heroImgContainer) {
-      heroImgContainer.innerHTML = "";
-      var heroImg = document.createElement("img");
-      heroImg.src = "content/images/cars24-ds-hero.webp";
-      heroImg.alt = "Cars24 Design System overview";
-      heroImg.style.width = "100%";
-      heroImg.style.height = "100%";
-      heroImg.style.objectFit = "contain";
-      heroImg.style.borderRadius = "12px";
-      heroImgContainer.appendChild(heroImg);
-    }
 
     /* Hero paragraph */
     var heroParagraphs = children[1].querySelectorAll("p");
@@ -215,10 +269,10 @@
     wrap.insertBefore(keyWorkSec, pux);
 
     /* Hide old numbered sections */
-    children[5].style.display = "none";   // Product & UX (shifted)
-    children[6].style.display = "none";   // Go-to-market
-    children[7].style.display = "none";   // Customer-facing
-    children[8].style.display = "none";   // Web & social
+    children[5].style.display = "none";   // Replaced legacy project block
+    children[6].style.display = "none";   // Replaced legacy project block
+    children[7].style.display = "none";   // Replaced legacy project block
+    children[8].style.display = "none";   // Replaced legacy project block
 
     /* Biggest Challenge — replace Stack */
     var stackSection = wrap.querySelector(".mynk-1g8iydi");
@@ -255,12 +309,11 @@
   }
 
   /* ════════════════════════════════════════════════
-     CARD 2 — Buyer Journey Made Easy  (Caldera slot)
+     CARD 2 — Buyer Journey Made Easy  (Cars24 Australia slot)
      Overlay: .mynk-gU1DZ.mynk-13nifyx
      Wrapper: .mynk-8a4ih6
      ════════════════════════════════════════════════ */
-  function injectCaldera(overlay) {
-    if (injectedCards.caldera) return;
+  function injectCars24Australia(overlay) {
     /* Find wrapper: try known class, then fall back to scrollable child */
     var wrap = overlay.querySelector(".mynk-8a4ih6");
     if (!wrap) {
@@ -270,158 +323,192 @@
       }
     }
     if (!wrap) return;
-    var children = wrap.children;
-    if (children.length < 8) return;
+    if (wrap.dataset.cars24BuyFlowDone === "1") return;
 
-    /* --- Title & meta (child 0) --- */
-    var titlePs = children[0].querySelectorAll("p");
-    if (titlePs[0]) titlePs[0].textContent = "Buyer Journey Made Easy";
-    if (titlePs[1]) titlePs[1].textContent = "Area: Product Design  ·  B2C  ·  Australia";
-    if (titlePs[2]) titlePs[2].textContent = "When: 2025";
-    if (titlePs[3]) titlePs[3].textContent = "Role: Senior Designer  ·  Gurugram";
+    wrap.innerHTML = "";
+    wrap.style.display = "flex";
+    wrap.style.flexDirection = "column";
+    wrap.style.gap = "48px";
+    wrap.style.width = "100%";
 
-    /* --- Hero image replacement --- */
-    var heroImgContainer2 = children[0].querySelector("div[class*='mynk-'] > div[class*='mynk-']");
-    if (!heroImgContainer2) {
-      var imgs2 = children[0].querySelectorAll("img");
-      if (imgs2.length > 0) heroImgContainer2 = imgs2[0].parentElement;
-    }
-    if (heroImgContainer2 && heroImgContainer2.querySelector("img")) {
-      heroImgContainer2.innerHTML = "";
-      var buyImg = document.createElement("img");
-      buyImg.src = "content/images/cars24-buyflow-hero.webp";
-      buyImg.alt = "Cars24 Australia Buy Flow";
-      buyImg.style.width = "100%";
-      buyImg.style.height = "100%";
-      buyImg.style.objectFit = "cover";
-      buyImg.style.borderRadius = "12px";
-      heroImgContainer2.appendChild(buyImg);
-    }
+    var titleBlock = document.createElement("div");
+    titleBlock.style.display = "flex";
+    titleBlock.style.flexDirection = "column";
+    titleBlock.style.gap = "16px";
+    titleBlock.style.width = "100%";
 
-    /* --- Hero paragraph (child 1) --- */
-    var heroPs = children[1].querySelectorAll("p");
-    var heroText = "Buying a used car online depends on speed, clarity, and confidence.";
-    if (heroPs[0]) heroPs[0].textContent = heroText;
-    /* Hide extra body paragraphs that were different Caldera context */
-    for (var i = 1; i < heroPs.length; i++) {
-      heroPs[i].parentElement.style.display = "none";
-    }
+    var title = document.createElement("p");
+    title.textContent = "Buyer Journey Made Easy";
+    title.style.fontFamily = H.fontFamily;
+    title.style.fontSize = "64px";
+    title.style.fontWeight = H.fontWeight;
+    title.style.fontVariationSettings = H.fontVariationSettings;
+    title.style.letterSpacing = "-1.92px";
+    title.style.lineHeight = "57.6px";
+    title.style.color = H.color;
+    title.style.margin = "0";
+    title.style.padding = "0";
+    titleBlock.appendChild(title);
 
-    /* --- Overview — replace "The work" (child 2) --- */
-    var workSection = children[2];
-    workSection.innerHTML = "";
-    workSection.style.display = "flex";
-    workSection.style.flexDirection = "column";
-    workSection.style.gap = "16px";
-    workSection.appendChild(makeHeading("Overview"));
-    workSection.appendChild(makeBody(
+    [
+      "Area: Product Design  ·  B2C  ·  Australia",
+      "When: 2025",
+      "Role: Senior Designer  ·  Gurugram"
+    ].forEach(function(text) {
+      titleBlock.appendChild(makeBody(text));
+    });
+    wrap.appendChild(titleBlock);
+
+    var imageWrap = document.createElement("div");
+    imageWrap.style.width = "100%";
+    imageWrap.style.aspectRatio = "16 / 9";
+    imageWrap.style.borderRadius = "12px";
+    imageWrap.style.overflow = "hidden";
+    imageWrap.style.background = "rgb(15, 15, 15)";
+
+    var heroImageSrc = "/content/images/cars24-australia-buy-flow-listing.webp?width=2880&height=2430";
+    var heroImage = document.createElement("img");
+    heroImage.src = heroImageSrc;
+    heroImage.srcset = heroImageSrc + " 2880w";
+    heroImage.alt = "Cars24 Australia buy flow listing page";
+    heroImage.style.display = "block";
+    heroImage.style.width = "100%";
+    heroImage.style.height = "100%";
+    heroImage.style.objectFit = "cover";
+    heroImage.style.objectPosition = "top center";
+    imageWrap.appendChild(heroImage);
+    wrap.appendChild(imageWrap);
+
+    wrap.appendChild(makeBody("Buying a used car online depends on speed, clarity, and confidence."));
+
+    var overview = makeSection("Overview");
+    overview.appendChild(makeBody(
       "In a high-consideration purchase like buying a used car, users don’t need more information — they need faster clarity and stronger confidence."
     ));
-    workSection.appendChild(makeBody(
+    overview.appendChild(makeBody(
       "The project focused on improving two of the most critical decision-making touchpoints in the Cars24 Australia buy flow:"
     ));
-    workSection.appendChild(makeBulletList([
+    overview.appendChild(makeBulletList([
       "Car listing cards",
       "Car detail pages",
       "Dealer Info pages",
       "Filter segregation",
       "Car categories"
     ]));
-    workSection.appendChild(makeBody(
+    overview.appendChild(makeBody(
       "Research and surveys showed that users struggled to quickly compare vehicles, understand financing options, and build confidence while browsing inventory."
     ));
-    workSection.appendChild(makeBody(
+    overview.appendChild(makeBody(
       "The existing experience exposed too much information without clear prioritization, increasing cognitive load and slowing decision-making."
     ));
+    wrap.appendChild(overview);
 
-    /* --- My Role — replace "Project leadership" (child 3) --- */
-    var projLead = children[3];
-    projLead.innerHTML = "";
-    projLead.style.display = "flex";
-    projLead.style.flexDirection = "column";
-    projLead.style.gap = "16px";
-    projLead.appendChild(makeHeading("My Role"));
-    projLead.appendChild(makeBody(
+    var myRole = makeSection("My Role");
+    myRole.appendChild(makeBody(
       "I led the redesign of the listing card experience with a focus on:"
     ));
-    projLead.appendChild(makeBulletList([
+    myRole.appendChild(makeBulletList([
       "Information hierarchy",
       "Scannability",
       "Financing visibility",
       "Trust-focused UX",
       "Mobile-first optimization"
     ]));
-    projLead.appendChild(makeBody(
+    myRole.appendChild(makeBody(
       "One important insight from research was that luxury car buyers behaved differently from mainstream used car buyers, so luxury inventory was intentionally excluded from this optimization initiative to maintain focus on the primary audience."
     ));
+    wrap.appendChild(myRole);
 
-    /* --- Key Work — replace "Visual language" (child 4) --- */
-    var visLang = children[4];
-    visLang.innerHTML = "";
-    visLang.style.display = "flex";
-    visLang.style.flexDirection = "column";
-    visLang.style.gap = "16px";
-    visLang.appendChild(makeHeading("Key Work"));
-    visLang.appendChild(makeBody(
+    var keyWork = makeSection("Key Work");
+    keyWork.appendChild(makeBody(
       "The old cards behaved like compressed detail pages, exposing too much information at once."
     ));
-    visLang.appendChild(makeBody(
+    keyWork.appendChild(makeBody(
       "I redesigned the cards to function as “decision accelerators” by prioritizing:"
     ));
-    visLang.appendChild(makeBulletList([
+    keyWork.appendChild(makeBulletList([
       "Pricing clarity",
       "Financing information",
       "Core specifications",
       "Trust indicators",
       "High-intent actions"
     ]));
-    visLang.appendChild(makeBody(
+    keyWork.appendChild(makeBody(
       "Lower-priority information was intentionally reduced to improve comparison speed and reduce cognitive overload."
     ));
+    wrap.appendChild(keyWork);
 
-    /* --- Hide "Website redesign" (child 5) --- */
-    children[5].style.display = "none";
-
-    /* --- Biggest Challenge — replace "Scope of work" (child 6) --- */
-    var scopeWork = children[6];
-    scopeWork.innerHTML = "";
-    scopeWork.style.display = "flex";
-    scopeWork.style.flexDirection = "column";
-    scopeWork.style.gap = "16px";
-    scopeWork.appendChild(makeHeading("Biggest Challenge"));
-    scopeWork.appendChild(makeBody(
+    var challenge = makeSection("Biggest Challenge");
+    challenge.appendChild(makeBody(
       "One of the biggest challenges was deciding how much information to remove."
     ));
-    scopeWork.appendChild(makeBody(
+    challenge.appendChild(makeBody(
       "Stakeholders initially wanted more data surfaced directly on the cards, but research showed that excessive information reduced clarity and slowed user decisions."
     ));
-    scopeWork.appendChild(makeBody(
-      "The tradeoff became:"
-    ));
-    scopeWork.appendChild(makeBody(
+    challenge.appendChild(makeBody(
       "Completeness vs clarity."
     ));
+    wrap.appendChild(challenge);
 
-    /* --- Impact — replace "Outcome" (child 7) --- */
-    var outcomeEl = children[7];
-    outcomeEl.innerHTML = "";
-    outcomeEl.style.display = "flex";
-    outcomeEl.style.flexDirection = "column";
-    outcomeEl.style.gap = "16px";
-    outcomeEl.appendChild(makeHeading("Impact"));
-    outcomeEl.appendChild(makeBulletList([
+    var impact = makeSection("Impact");
+    impact.appendChild(makeBulletList([
       "Finance funnel improved by 13%",
       "Overall funnel improved by 37%",
       "Improved comparison efficiency",
       "Better mobile usability",
       "Faster browsing and decision-making"
     ]));
+    wrap.appendChild(impact);
 
-    /* --- CTA link (child 9) --- */
-    var ctaLink = children[9].querySelector("a");
-    if (ctaLink) ctaLink.href = "https://www.figma.com/design/05XvZEvGalrIPjDKKOr2eN/Classified?node-id=13-429&t=sRdyydFEjk2OHpCz-4";
+    var cta = document.createElement("a");
+    cta.href = "https://www.figma.com/design/05XvZEvGalrIPjDKKOr2eN/Classified?node-id=13-429&t=sRdyydFEjk2OHpCz-4";
+    cta.target = "_blank";
+    cta.rel = "noopener";
+    cta.textContent = "Explore designs";
+    cta.style.alignItems = "center";
+    cta.style.background = "linear-gradient(270deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.2) 100%)";
+    cta.style.borderRadius = "999px";
+    cta.style.color = "rgb(255, 255, 255)";
+    cta.style.display = "inline-flex";
+    cta.style.fontFamily = B.fontFamily;
+    cta.style.fontSize = "16px";
+    cta.style.height = "43px";
+    cta.style.justifyContent = "center";
+    cta.style.padding = "0 24px";
+    cta.style.textDecoration = "none";
+    cta.style.width = "fit-content";
+    wrap.appendChild(cta);
 
-    injectedCards.caldera = true;
+    wrap.dataset.cars24BuyFlowDone = "1";
+  }
+
+  /* ════════════════════════════════════════════════
+     CARD 3 — Park+ Challan
+     Overlay: .mynk-gU1DZ.mynk-1q0imte
+     ════════════════════════════════════════════════ */
+  function injectParkPlus(overlay) {
+    if (injectedCards.parkPlus) return;
+
+    var heroImage = overlay.querySelector("img");
+    if (!heroImage) return;
+
+    var heroImageSrc = "/content/images/park-plus-challan-cover.webp?width=2858&height=1827";
+    heroImage.src = heroImageSrc;
+    heroImage.srcset = heroImageSrc + " 2858w";
+    heroImage.style.width = "100%";
+    heroImage.style.height = "100%";
+    heroImage.style.objectFit = "cover";
+    heroImage.style.objectPosition = "center center";
+
+    var heroPicture = heroImage.closest("picture");
+    if (heroPicture) {
+      var heroSources = heroPicture.querySelectorAll("source");
+      for (var si = 0; si < heroSources.length; si++) {
+        heroSources[si].srcset = heroImageSrc + " 2858w";
+      }
+    }
+
+    injectedCards.parkPlus = true;
   }
 
   /* ── Watch for overlays to appear ── */
@@ -431,9 +518,14 @@
       setTimeout(function () { injectCars24(cars24Overlay); }, 120);
     }
 
-    var calderaOverlay = document.querySelector(".mynk-gU1DZ.mynk-13nifyx");
-    if (calderaOverlay && !injectedCards.caldera) {
-      setTimeout(function () { injectCaldera(calderaOverlay); }, 120);
+    var cars24AustraliaOverlay = document.querySelector(".mynk-gU1DZ.mynk-13nifyx");
+    if (cars24AustraliaOverlay) {
+      setTimeout(function () { injectCars24Australia(cars24AustraliaOverlay); }, 120);
+    }
+
+    var parkPlusOverlay = document.querySelector(".mynk-gU1DZ.mynk-1q0imte");
+    if (parkPlusOverlay && !injectedCards.parkPlus) {
+      setTimeout(function () { injectParkPlus(parkPlusOverlay); }, 120);
     }
   });
 
@@ -444,7 +536,10 @@
   if (e1) setTimeout(function () { injectCars24(e1); }, 200);
 
   var e2 = document.querySelector(".mynk-gU1DZ.mynk-13nifyx");
-  if (e2) setTimeout(function () { injectCaldera(e2); }, 200);
+  if (e2) setTimeout(function () { injectCars24Australia(e2); }, 200);
+
+  var e3 = document.querySelector(".mynk-gU1DZ.mynk-1q0imte");
+  if (e3) setTimeout(function () { injectParkPlus(e3); }, 200);
 
   /* ════════════════════════════════════════════════
      PAGE CONTENT — text replacements on main page
@@ -457,6 +552,16 @@
         if (ps[i].textContent.trim().indexOf(startsWith) === 0) return ps[i];
       }
       return null;
+    }
+    function setCardSubtitle(card, text) {
+      if (!card) return;
+      var ps = card.querySelectorAll("p");
+      for (var i = 0; i < ps.length; i++) {
+        if (ps[i].textContent.trim().indexOf(" / ") !== -1) {
+          ps[i].textContent = text;
+          return;
+        }
+      }
     }
 
     /* ── HERO ── */
@@ -511,30 +616,83 @@
       }
     }
 
-    /* ── SECTION 03 — Card labels (content-based, variant-name-independent) ── */
+    /* ── SECTION 03 — Card labels ── */
     var sec03 = document.querySelector('[data-mynk-name="03"]');
     if (sec03) {
-      var allVariants03 = sec03.querySelectorAll('[data-mynk-name^="Variant"]');
-      var cards03 = [];
-      for (var vi = 0; vi < allVariants03.length; vi++) {
-        if (allVariants03[vi].querySelectorAll("p").length > 0) cards03.push(allVariants03[vi]);
-      }
+      var cards03 = sec03.querySelectorAll('[data-mynk-name="Variant 2"]');
       /* Card 0: Cars24 subtitle */
       if (cards03[0]) {
-        var sub0 = findP(cards03[0], "Cybersecurity");
-        if (sub0) sub0.textContent = "Design System / SaaS B2B, B2C";
+        setCardSubtitle(cards03[0], "Design System / SaaS B2B, B2C");
       }
-      /* Card 1: Caldera → Cars24 Australia */
+      var cars24DesignSystemCard = null;
+      var sec03Ps = sec03.querySelectorAll("p");
+      for (var c0i = 0; c0i < sec03Ps.length; c0i++) {
+        if (sec03Ps[c0i].textContent.trim() === "Cars24 Design System") {
+          cars24DesignSystemCard = sec03Ps[c0i].closest('[data-highlight="true"]') ||
+            sec03Ps[c0i].closest('[data-mynk-name="Variant 1"], [data-mynk-name="Variant 2"]');
+          break;
+        }
+      }
+      if (cars24DesignSystemCard) {
+        setCardSubtitle(cars24DesignSystemCard, "Design System / SaaS B2B, B2C");
+
+        var project1Media = cars24DesignSystemCard.querySelector(".mynk-180jv24-container");
+        if (project1Media) {
+          var project1ImgSrc = "/content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410";
+          setProjectCardImage(cars24DesignSystemCard, project1Media, project1ImgSrc, "Cars24 Design System card artwork", "contain", "center center");
+        }
+      }
+      /* Card 1: Cars24 Australia - Buy flow */
       if (cards03[1]) {
-        var title1 = findP(cards03[1], "Caldera");
+        var title1 = findP(cards03[1], "Cars24 Australia - Buy flow");
         if (title1) title1.textContent = "Cars24 Australia - Buy flow";
-        var sub1 = findP(cards03[1], "Web3");
+        var sub1 = findP(cards03[1], "Product Design");
         if (sub1) sub1.textContent = "Product Design / B2C";
+      }
+      var cars24BuyFlowCard = null;
+      for (var cpi = 0; cpi < sec03Ps.length; cpi++) {
+        var cardText = sec03Ps[cpi].textContent.trim();
+        if (cardText === "Cars24 Australia - Buy flow") {
+          cars24BuyFlowCard = sec03Ps[cpi].closest('[data-highlight="true"]') ||
+            sec03Ps[cpi].closest('[data-mynk-name="Variant 1"], [data-mynk-name="Variant 2"]');
+          sec03Ps[cpi].textContent = "Cars24 Australia - Buy flow";
+          break;
+        }
+      }
+      if (cars24BuyFlowCard) {
+        var cardPs = cars24BuyFlowCard.querySelectorAll("p");
+        for (var cpj = 0; cpj < cardPs.length; cpj++) {
+          var currentCardText = cardPs[cpj].textContent.trim();
+          if (currentCardText === "Cars24 Australia - Buy flow") cardPs[cpj].textContent = "Cars24 Australia - Buy flow";
+        }
+        setCardSubtitle(cars24BuyFlowCard, "Product Design / B2C");
+
+        var media = cars24BuyFlowCard.querySelector(".mynk-t2fzvc-container");
+        if (media) {
+          var cardImgSrc = "/content/images/ofupg06QZfIa4u1jO05rU3np9pw.png?width=512&height=410";
+          setProjectCardImage(cars24BuyFlowCard, media, cardImgSrc, "Cars24 Australia card artwork", "cover", "top center");
+        }
       }
       /* Card 2: Park+ subtitle */
       if (cards03[2]) {
-        var sub2 = findP(cards03[2], "Cybersecurity");
-        if (sub2) sub2.textContent = "Legal service / B2C";
+        setCardSubtitle(cards03[2], "Legal service / B2C");
+      }
+      var parkCard = null;
+      for (var pki = 0; pki < sec03Ps.length; pki++) {
+        if (sec03Ps[pki].textContent.trim() === "Park+ Challan") {
+          parkCard = sec03Ps[pki].closest('[data-highlight="true"]') ||
+            sec03Ps[pki].closest('[data-mynk-name="Variant 1"], [data-mynk-name="Variant 2"]');
+          break;
+        }
+      }
+      if (parkCard) {
+        setCardSubtitle(parkCard, "Legal service / B2C");
+
+        var parkMedia = parkCard.querySelector(".mynk-y7ndlg-container, .mynk-9omkop-container");
+        if (parkMedia) {
+          var parkImgSrc = "/content/images/ujTyPAs3slech5PiMLO4pxlJ3Q.png?width=512&height=410";
+          setProjectCardImage(parkCard, parkMedia, parkImgSrc, "Park+ card artwork", "contain", "center center");
+        }
       }
     }
 
@@ -626,30 +784,20 @@
       }
     }
 
-    /* ── IMAGE GRID — reduce to 8 (2+3+3) ── */
-    var inspo = document.querySelector('[data-mynk-name="inspo"]');
-    if (inspo) {
-      var grid = inspo.querySelector('[data-mynk-name="Frame 2147226466"]');
-      if (grid) {
-        /* Trim each row to 3 first */
-        for (var ri = 0; ri < grid.children.length; ri++) {
-          var row = grid.children[ri];
-          while (row.children.length > 3) {
-            row.removeChild(row.lastElementChild);
-          }
-        }
-        /* Remove last photo from first row → 2+3+3 */
-        var firstRow = grid.children[0];
-        if (firstRow && firstRow.children.length > 2) {
-          firstRow.removeChild(firstRow.lastElementChild);
-        }
+    /* ── HIDE IMAGE GRID SECTION ── */
+    var inspoBlocks = document.querySelectorAll('[data-mynk-name="inspo"]');
+    var inspo = null;
+    for (var ii = 0; ii < inspoBlocks.length; ii++) {
+      inspoBlocks[ii].style.display = "";
+      if (
+        inspoBlocks[ii].textContent.indexOf("What my world looks like") !== -1 &&
+        inspoBlocks[ii].querySelector('[data-mynk-name="Frame 2147226466"]')
+      ) {
+        inspo = inspoBlocks[ii];
       }
     }
-
-    /* ── FOOTER — hide brand logos strip ── */
-    var frame116 = document.querySelector('[data-mynk-name="Frame 116"]');
-    if (frame116 && frame116.children.length >= 2) {
-      frame116.children[1].style.display = 'none';
+    if (inspo) {
+      inspo.style.display = "none";
     }
 
   }
