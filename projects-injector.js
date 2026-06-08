@@ -178,6 +178,24 @@
     var children = wrap.children;
     if (children.length < 7) return;
 
+    /* Hero image */
+    var heroImageSrc = "content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410";
+    var heroPic = wrap.querySelector('[data-mynk-name="pic"]');
+    var heroImgs = (heroPic || wrap).querySelectorAll("img");
+    for (var hi = 0; hi < heroImgs.length; hi++) {
+      heroImgs[hi].src = heroImageSrc;
+      heroImgs[hi].srcset = heroImageSrc + " 512w";
+      heroImgs[hi].style.objectFit = "contain";
+      heroImgs[hi].style.objectPosition = "center center";
+    }
+    var heroSources = (heroPic || wrap).querySelectorAll("source");
+    for (var hs = 0; hs < heroSources.length; hs++) {
+      heroSources[hs].srcset = heroImageSrc + " 512w";
+    }
+    if (heroPic) {
+      heroPic.style.background = "rgb(15, 15, 15)";
+    }
+
     /* Hero paragraph */
     var heroParagraphs = children[1].querySelectorAll("p");
     var heroText = "Redesigned the multi-brand design system for Cars24’s ecosystem of products, enabling scalable theming, improved design-development parity, and AI-ready token architecture.";
@@ -798,6 +816,12 @@
     }
     if (inspo) {
       inspo.style.display = "none";
+    }
+
+    /* ── FOOTER — remove logo strip ── */
+    var footerLogos = document.querySelectorAll('[data-mynk-name="logos"]');
+    for (var fl = 0; fl < footerLogos.length; fl++) {
+      footerLogos[fl].remove();
     }
 
   }
