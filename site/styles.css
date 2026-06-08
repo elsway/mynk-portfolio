@@ -16,6 +16,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+[data-mynk-name="logos"] {
+  display: none !important;
+}
+
 /* ── Project overlay ── */
 .pj-overlay { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9999; display:flex; align-items:flex-end; justify-content:center; opacity:0; transition:opacity .3s; }
 .pj-overlay.pj-visible { opacity:1; }

@@ -20914,9 +20914,9 @@ var ff,
                             d(V, {
                               background: {
                                 alt: ``,
-                                fit: `fill`,
-                                intrinsicHeight: 1912,
-                                intrinsicWidth: 2986,
+                                fit: `contain`,
+                                intrinsicHeight: 410,
+                                intrinsicWidth: 512,
                                 loading: F(
                                   (u?.y || 0) +
                                     48 +
@@ -20928,10 +20928,10 @@ var ff,
                                     0 +
                                     802,
                                 ),
-                                pixelHeight: 1912,
-                                pixelWidth: 2986,
+                                pixelHeight: 410,
+                                pixelWidth: 512,
                                 sizes: `min(${u?.width || `100vw`} - 64px, 1920px)`,
-                                src: `content/images/gyFQfEOk1TYZl7SFoB3IcjQKdWI.png?width=2986&height=1912`,
+                                src: `content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410`,
                               },
                               className: `mynk-1w9ex7k`,
                               "data-border": !0,
@@ -20956,9 +20956,9 @@ var ff,
                                   Z3d7AOqQJ: {
                                     background: {
                                       alt: ``,
-                                      fit: `fill`,
-                                      intrinsicHeight: 1912,
-                                      intrinsicWidth: 2986,
+                                      fit: `contain`,
+                                      intrinsicHeight: 410,
+                                      intrinsicWidth: 512,
                                       loading: F(
                                         (u?.y || 0) +
                                           48 +
@@ -20970,10 +20970,10 @@ var ff,
                                           0 +
                                           634,
                                       ),
-                                      pixelHeight: 1912,
-                                      pixelWidth: 2986,
+                                      pixelHeight: 410,
+                                      pixelWidth: 512,
                                       sizes: `min(${u?.width || `100vw`} - 40px, 1920px)`,
-                                      src: `content/images/gyFQfEOk1TYZl7SFoB3IcjQKdWI.png?width=2986&height=1912`,
+                                      src: `content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410`,
                                     },
                                   },
                                 },
