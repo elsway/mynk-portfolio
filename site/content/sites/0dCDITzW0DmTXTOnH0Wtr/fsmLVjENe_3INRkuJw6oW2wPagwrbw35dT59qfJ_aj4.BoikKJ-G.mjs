@@ -20914,9 +20914,9 @@ var ff,
                             d(V, {
                               background: {
                                 alt: ``,
-                                fit: `contain`,
-                                intrinsicHeight: 410,
-                                intrinsicWidth: 512,
+                                fit: `cover`,
+                                intrinsicHeight: 1826,
+                                intrinsicWidth: 2858,
                                 loading: F(
                                   (u?.y || 0) +
                                     48 +
@@ -20928,10 +20928,10 @@ var ff,
                                     0 +
                                     802,
                                 ),
-                                pixelHeight: 410,
-                                pixelWidth: 512,
+                                pixelHeight: 1826,
+                                pixelWidth: 2858,
                                 sizes: `min(${u?.width || `100vw`} - 64px, 1920px)`,
-                                src: `content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410`,
+                                src: `content/images/cars24-ds-hero.webp?width=2858&height=1826`,
                               },
                               className: `mynk-1w9ex7k`,
                               "data-border": !0,
@@ -20956,9 +20956,9 @@ var ff,
                                   Z3d7AOqQJ: {
                                     background: {
                                       alt: ``,
-                                      fit: `contain`,
-                                      intrinsicHeight: 410,
-                                      intrinsicWidth: 512,
+                                      fit: `cover`,
+                                      intrinsicHeight: 1826,
+                                      intrinsicWidth: 2858,
                                       loading: F(
                                         (u?.y || 0) +
                                           48 +
@@ -20970,10 +20970,10 @@ var ff,
                                           0 +
                                           634,
                                       ),
-                                      pixelHeight: 410,
-                                      pixelWidth: 512,
+                                      pixelHeight: 1826,
+                                      pixelWidth: 2858,
                                       sizes: `min(${u?.width || `100vw`} - 40px, 1920px)`,
-                                      src: `content/images/srnACuT1AUGyoXQxVq4VXsjodCQ.png?width=512&height=410`,
+                                      src: `content/images/cars24-ds-hero.webp?width=2858&height=1826`,
                                     },
                                   },
                                 },
